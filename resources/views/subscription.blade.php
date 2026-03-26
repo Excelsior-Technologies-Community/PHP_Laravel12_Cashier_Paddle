@@ -22,7 +22,7 @@
             Paddle.Checkout.open({
                 items: [
                     {
-                        priceId: "pri_01kmj83vr4kwsjq00x61ya46kn",
+                        priceId: "pri_xxxxxxxxxxxxxxxxxxxx",
                         quantity: 1
                     }
                 ]
