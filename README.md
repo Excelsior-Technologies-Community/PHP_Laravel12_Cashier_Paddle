@@ -511,8 +511,11 @@ Authtoken saved to configuration file
 
 ### Step 13.2: Start Laravel Server
 
-php artisan serve
+Run:
 
+```bash
+php artisan serve
+```
 Default URL:
 
 ```bash
