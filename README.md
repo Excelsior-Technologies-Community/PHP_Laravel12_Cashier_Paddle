@@ -516,6 +516,10 @@ Run:
 ```bash
 php artisan serve
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> development
 Default URL:
 
 ```bash

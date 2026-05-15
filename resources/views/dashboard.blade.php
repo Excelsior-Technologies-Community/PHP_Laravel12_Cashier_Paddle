@@ -1,27 +1,34 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-bold text-2xl text-gray-800">
+            Dashboard
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-10 bg-gray-100 min-h-screen">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
 
-                    {{ __("You're logged in!") }}
+            <div class="bg-white rounded-2xl shadow-xl p-10">
 
-                    <br><br>
+                <h1 class="text-3xl font-bold mb-4">
+                    Welcome {{ auth()->user()->name }}
+                </h1>
 
-                    <!-- Add this -->
-                    <a href="{{ route('subscription') }}"
-                       style="color: blue; text-decoration: underline;">
-                        Go to Subscription
-                    </a>
+                <p class="text-gray-600 mb-6">
+                    Manage your subscriptions and premium features.
+                </p>
 
-                </div>
+                <a href="{{ route('subscription') }}"
+                    class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl">
+                    Manage Subscription
+                </a>
+
             </div>
+
         </div>
+
     </div>
+
 </x-app-layout>
