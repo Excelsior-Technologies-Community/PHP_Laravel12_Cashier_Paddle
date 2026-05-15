@@ -1,29 +1,62 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
-use Illuminate\Support\Facades\Route;
+use Laravel\Paddle\Http\Controllers\WebhookController;
 
+Route::post('/paddle/webhook', WebhookController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Welcome Route
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
     return view('welcome');
 });
 
 /*
 |--------------------------------------------------------------------------
-| Subscription Routes (ADD THIS)
+| Authenticated Routes
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Routes
+    |--------------------------------------------------------------------------
+    */
     Route::get('/subscription', [SubscriptionController::class, 'index'])
         ->name('subscription');
 
     Route::post('/checkout', [SubscriptionController::class, 'checkout'])
         ->name('checkout');
 
-    Route::get('/dashboard', function () { 
-        return view('dashboard');
-    })->name('dashboard');
+    Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel'])
+        ->name('subscription.cancel');
+
+    Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])
+        ->name('subscription.resume');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Premium Protected Route
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/premium', [SubscriptionController::class, 'premium'])
+        ->middleware('subscribed')
+        ->name('premium');
 
     /*
     |--------------------------------------------------------------------------
@@ -38,6 +71,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
 });
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
 require __DIR__.'/auth.php';

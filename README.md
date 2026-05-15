@@ -631,4 +631,7 @@ PHP_Laravel12_Cashier_Paddle/
 
 Your PHP_Laravel12_Cashier_Paddle Project is now ready!
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> development

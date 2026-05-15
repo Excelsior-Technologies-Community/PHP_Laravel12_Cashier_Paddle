@@ -6,14 +6,63 @@ use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Page
+    |--------------------------------------------------------------------------
+    */
     public function index()
     {
-        return view('subscription');
+        $user = auth()->user();
+
+        $subscribed = $user->subscribed();
+
+        return view('subscription', compact('subscribed'));
     }
 
-
-    public function checkout(Request $request)
+    /*
+    |--------------------------------------------------------------------------
+    | Cancel Subscription
+    |--------------------------------------------------------------------------
+    */
+    public function cancel()
     {
-        // No redirect, no return URL
+        $user = auth()->user();
+
+        if ($user->subscribed()) {
+            $user->subscription()->cancel();
+        }
+
+        return redirect()
+            ->route('subscription')
+            ->with('success', 'Subscription cancelled successfully.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Resume Subscription
+    |--------------------------------------------------------------------------
+    */
+    public function resume()
+    {
+        $user = auth()->user();
+
+        if ($user->subscription()->onGracePeriod()) {
+            $user->subscription()->resume();
+        }
+
+        return redirect()
+            ->route('subscription')
+            ->with('success', 'Subscription resumed successfully.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Premium Page
+    |--------------------------------------------------------------------------
+    */
+    public function premium()
+    {
+        return view('premium');
     }
 }
